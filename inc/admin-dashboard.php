@@ -53,11 +53,11 @@ class WEOBC_Admin_Dashboard {
 
         <div class="wrap">
                 
-            <h2><?php _e("WooCommerce Order Exports:", "woo-export-order-bcf"); ?></h2>
+            <h2><?php _e('WooCommerce Order Exports:', 'woo-export-order-bcf'); ?></h2>
 
             <h2 class="nav-tab-wrapper">
-                <a href="?page=woo_export_order_bcf&tab=export_orders" class="nav-tab <?php echo $active_tab == 'export_orders' ? 'nav-tab-active' : ''; ?>">Export Orders</a>
-                <a href="?page=woo_export_order_bcf&tab=export_settings" class="nav-tab <?php echo $active_tab == 'export_settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
+                <a href="?page=woo_export_order_bcf&tab=export_orders" class="nav-tab <?php echo $active_tab == 'export_orders' ? 'nav-tab-active' : ''; ?>"><?php _e('Export Orders', 'woo-export-order-bcf'); ?></a>
+                <a href="?page=woo_export_order_bcf&tab=export_settings" class="nav-tab <?php echo $active_tab == 'export_settings' ? 'nav-tab-active' : ''; ?>"><?php _e('Settings', 'woo-export-order-bcf'); ?></a>
             </h2>
 
             <?php if ( $active_tab == 'export_orders' ) : ?>
@@ -70,14 +70,14 @@ class WEOBC_Admin_Dashboard {
                         </th>
                         <td>
                             <select id="woebcf_order_status" class="wc-enhanced-select-nostd" data-placeholder="<?php esc_attr_e('Select Order Status', 'woo-export-order-bcf'); ?>" name="woebcf_order_status" multiple="multiple" style="width:500px;max-width:100%;">
-                                <option value=""><?php _e('Select Order Status', "woo-export-order-bcf"); ?></option>
+                                <option value=""><?php esc_attr_e('Select Order Status', "woo-export-order-bcf"); ?></option>
                                 <?php
                                 foreach( $statuses as $status => $label ){
                                     echo '<option value="' . esc_attr($status) . '">' . $label . '</option>';
                                 }
                                 ?>
                             </select>
-                            <p><?php _e('If left empty, completed orders will be exported.'); ?></p>
+                            <p><?php _e('If left empty, completed orders will be exported.', 'woo-export-order-bcf'); ?></p>
                         </td>
                     </tr>
                                                 
@@ -86,7 +86,7 @@ class WEOBC_Admin_Dashboard {
                             <?php _e("Delivery date:", "woo-export-order-bcf"); ?>
                         </th>
                         <td>
-                            <input type="date" name="woebcf_order_date" placeholder="<?php _e("Select date", "woo-export-order-bcf"); ?>" value="<?php echo esc_attr($date->format("Y-m-d")) ?>" required style="width:500px;max-width:100%;" />
+                            <input type="date" name="woebcf_order_date" placeholder="<?php esc_attr_e("Select date", "woo-export-order-bcf"); ?>" value="<?php echo esc_attr($date->format("Y-m-d")) ?>" required style="width:500px;max-width:100%;" />
                         </td>
                     </tr>
 
@@ -95,7 +95,7 @@ class WEOBC_Admin_Dashboard {
                             <?php _e("Email export:", "woo-export-order-bcf"); ?>
                         </th>
                         <td>
-                            <input type="text" name="woebcf_email_address" placeholder="<?php _e("Enter email address", "woo-export-order-bcf"); ?>" value="" style="width:500px;max-width:100%;"  />
+                            <input type="text" name="woebcf_email_address" placeholder="<?php esc_attr_e("Enter email address", "woo-export-order-bcf"); ?>" value="" style="width:500px;max-width:100%;"  />
                             <p><?php _e("Single or comma separated list of emails.", "woo-export-order-bcf"); ?></p>
                         </td>
                     </tr>
@@ -120,7 +120,7 @@ class WEOBC_Admin_Dashboard {
                             <?php _e("Admin email (From email):", "woo-export-order-bcf"); ?>
                         </th>
                         <td>
-                            <input type="email" name="email_address" placeholder="<?php _e("Enter email address", "woo-export-order-bcf"); ?>" value="<?php echo $email_address ? $email_address : ''; ?>" style="width:500px;max-width:100%;"/>
+                            <input type="email" name="email_address" placeholder="<?php esc_attr_e("Enter email address", "woo-export-order-bcf"); ?>" value="<?php echo $email_address ? $email_address : ''; ?>" style="width:500px;max-width:100%;"/>
                         </td>
                     </tr>
 

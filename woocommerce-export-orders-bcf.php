@@ -14,7 +14,8 @@
  * License:             GNU General Public License v3.0
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.html
  * Domain Path:         /i18n/languages/
- * GitHub Plugin URI:   
+ * GitHub Plugin URI:   https://github.com/vlaskiz/WooCommerce-Export-Orders-By-Custom-Field
+ * text domain:         woo-export-order-bcf
  */
 
 namespace WooExportOrdersBcf;
@@ -38,7 +39,7 @@ class Woo_Export_Orders_Bcf {
 
         $this->includes();
 
-        add_filter('woocommerce_screen_ids', [ $this, 'set_wc_screen_ids' ] );
+        add_filter( 'woocommerce_screen_ids', [ $this, 'set_wc_screen_ids' ] );
 
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts' ], 15 );
 
@@ -116,12 +117,12 @@ class Woo_Export_Orders_Bcf {
         if ( ! isset( $posted_data['woo_export_pdf_nonce'] ) 
             || ! wp_verify_nonce( $posted_data['woo_export_pdf_nonce'], 'woo_export_pdf_perform' ) 
         ) {
-            $this->ajax_submit( 'error', 'Sorry, this action cannot be performed for security reasons.', $dataArray );
+            $this->ajax_submit( 'error', __('Sorry, this action cannot be performed for security reasons.', 'woo-export-order-bcf'), $dataArray );
             die();
         }
 
         if ( empty($posted_data['woebcf_order_date']) ) {
-            $this->ajax_submit( 'error', 'Select delivery date.', $dataArray );
+            $this->ajax_submit( 'error', __('Select delivery date.', 'woo-export-order-bcf'), $dataArray );
             die();
         }
 
@@ -256,9 +257,9 @@ class Woo_Export_Orders_Bcf {
                 $this->remove_file( $file_path  );
             }
             
-            $this->ajax_submit( 'success', 'Success.', $dataArray );
+            $this->ajax_submit( 'success', __('Success.', 'woo-export-order-bcf'), $dataArray );
         } else {
-            $this->ajax_submit( 'error', 'No orders found. Try different parameters.', $dataArray );
+            $this->ajax_submit( 'error', __('No orders found. Try different parameters.', 'woo-export-order-bcf'), $dataArray );
         }
 
         die();
@@ -380,7 +381,7 @@ class Woo_Export_Orders_Bcf {
             $headers = 'from: '. $admin_address . "\r\n" . 'reply-to: ' . $admin_address . "\r\n";
 
             $email_subject = $subject . date("Y-m-d");
-            $email_body = __('Bellow please find an attached order export file.');
+            $email_body = __('Bellow please find an attached order export file.', 'woo-export-order-bcf');
 
             $sent = wp_mail( trim($recipients), $email_subject, $email_body, $headers, [ $filepath ] );
 
