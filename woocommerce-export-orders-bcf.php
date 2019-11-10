@@ -163,7 +163,6 @@ class Woo_Export_Orders_Bcf {
 
                 $order = new \WC_Order( $orderID );
                 $order_items = $order->get_items();
-
                 $customer_note = $order->get_customer_note();
 
                 ?>
@@ -196,36 +195,39 @@ class Woo_Export_Orders_Bcf {
                     <?php endif; ?>
 
                     <div class="order-items">
-                    <?php
-
-                    foreach( $order_items as $item_id => $item ){
-                        //Get the product ID
-                        $product_id = $item->get_product_id();
-
-                        //Get the variation ID
-                        // $product_id = $item->get_variation_id();
-
-                        //Get the WC_Product object
-                        $product = $item->get_product();
-
-                        // The quantity
-                        $product_qty = $item->get_quantity();
-
-                        // The product name
-                        $product_name = $item->get_name(); // … OR: $product->get_name();
-
-                        //Get the product SKU (using WC_Product method)
-                        $sku = $product->get_sku();
-
-                        $unit = get_post_meta( $product_id, 'unit', true );
-
-                        ?>
-                        <div class="order-item-single">-&nbsp;<?php echo $product_name; echo $unit ? '&nbsp;(vienetas&nbsp;' . $unit . ')': ''; ?>&nbsp;x<?php echo $product_qty; ?>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></div>
                         <?php
-                    }
+                        foreach( $order_items as $item_id => $item ) {
+                            //Get the product ID
+                            $product_id = $item->get_product_id();
 
-                    ?>
+                            //Get the variation ID
+                            // $product_id = $item->get_variation_id();
+
+                            //Get the WC_Product object
+                            // $product = $item->get_product();
+
+                            // The quantity
+                            $product_qty = $item->get_quantity();
+
+                            // The product name
+                            $product_name = $item->get_name(); // … OR: $product->get_name();
+
+                            //Get the product SKU (using WC_Product method)
+                            // $sku = $product->get_sku();
+
+                            $unit = get_post_meta( $product_id, 'unit', true );
+
+                            ?>
+                            <div class="order-item-single">-&nbsp;<?php echo $product_name; echo $unit ? '&nbsp;(vienetas&nbsp;' . $unit . ')': ''; ?>&nbsp;x<?php echo $product_qty; ?>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></div>
+                        <?php
+                        }
+                        ?>
                     </div>
+
+                    <div class="order-totals" style="margin-top:6pt;text-align:right">
+                        <?php printf( __('<b>Order total:</b> %s'), $order->get_formatted_order_total() ); ?>
+                    </div>
+
                 </div>
                 <?php
 
