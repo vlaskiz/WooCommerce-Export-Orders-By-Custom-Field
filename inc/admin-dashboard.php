@@ -42,6 +42,8 @@ class WEOBC_Admin_Dashboard {
         );
 
         $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'export_orders';
+        $export_orders_tab_url = '?page=woo_export_order_bcf&tab=export_orders';
+        $settings_tab_url = '?page=woo_export_order_bcf&tab=export_settings';
 
         if ( isset($_POST['email_address']) ) {
             update_option( "woebcf_admin_email_address", $_POST["email_address"] );
@@ -53,11 +55,19 @@ class WEOBC_Admin_Dashboard {
 
         <div class="wrap">
                 
-            <h2><?php _e('WooCommerce Order Exports:', 'woo-export-order-bcf'); ?></h2>
+            <h2><?php _e('WooCommerce Order Exports', 'woo-export-order-bcf'); ?></h2>
+
+            <?php
+
+            if ( isset($_POST['woo_export_order_bcf_save'] ) ) {
+                _e( 'Settings have been saved.', 'woo-export-order-bcf' );
+            }
+
+            ?>
 
             <h2 class="nav-tab-wrapper">
-                <a href="?page=woo_export_order_bcf&tab=export_orders" class="nav-tab <?php echo $active_tab == 'export_orders' ? 'nav-tab-active' : ''; ?>"><?php _e('Export Orders', 'woo-export-order-bcf'); ?></a>
-                <a href="?page=woo_export_order_bcf&tab=export_settings" class="nav-tab <?php echo $active_tab == 'export_settings' ? 'nav-tab-active' : ''; ?>"><?php _e('Settings', 'woo-export-order-bcf'); ?></a>
+                <a href="<?php echo esc_attr($export_orders_tab_url); ?>" class="nav-tab <?php echo $active_tab == 'export_orders' ? 'nav-tab-active' : ''; ?>"><?php _e('Export Orders', 'woo-export-order-bcf'); ?></a>
+                <a href="<?php echo esc_attr($settings_tab_url); ?>" class="nav-tab <?php echo $active_tab == 'export_settings' ? 'nav-tab-active' : ''; ?>"><?php _e('Settings', 'woo-export-order-bcf'); ?></a>
             </h2>
 
             <?php if ( $active_tab == 'export_orders' ) : ?>
@@ -77,7 +87,7 @@ class WEOBC_Admin_Dashboard {
                                 }
                                 ?>
                             </select>
-                            <p><?php _e('If left empty, completed orders will be exported.', 'woo-export-order-bcf'); ?></p>
+                            <p class="description"><?php _e('If left empty, completed orders will be exported.', 'woo-export-order-bcf'); ?></p>
                         </td>
                     </tr>
                                                 
@@ -92,11 +102,18 @@ class WEOBC_Admin_Dashboard {
 
                     <tr valign="top">
                         <th scope="row">
-                            <?php _e("Email export:", "woo-export-order-bcf"); ?>
+                            <?php _e("Send to emails:", "woo-export-order-bcf"); ?>
                         </th>
                         <td>
-                            <input type="text" name="woebcf_email_address" placeholder="<?php esc_attr_e("Enter email address", "woo-export-order-bcf"); ?>" value="" style="width:500px;max-width:100%;"  />
-                            <p><?php _e("Single or comma separated list of emails.", "woo-export-order-bcf"); ?></p>
+                            <input type="text" name="woebcf_email_address" placeholder="<?php esc_attr_e('Enter email address(-es)', 'woo-export-order-bcf'); ?>" value="" style="width:500px;max-width:100%;"<?php echo $email_address ? '' : ' readonly'; ?> />
+                            <p class="description"><?php _e("Single or comma separated list of emails.", "woo-export-order-bcf"); ?></p>
+                            <?php if ( !$email_address ) : ?>
+                            <span class="description"><?php printf(
+                                __('Admin (From) email is not set. Please set it in the %1$ssettings tab%2$s tab if you want to use this feature.', "woo-export-order-bcf"),
+                                '<a href="'.esc_attr($settings_tab_url).'">',
+                                '</a>'
+                            ); //_e("Admin (From) email is not set. Please set it in the settings tab if you want to use this feature.", "woo-export-order-bcf"); ?></span>
+                            <?php endif; ?>
                         </td>
                     </tr>
 
