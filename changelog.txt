@@ -1,0 +1,7 @@
+== Changelog ==
+## [1.0.1] - 2019-11-10
+- Added: Changelog.
+- Tweaked: Localization support
+
+## [1.0.0] - 2019-11-10
+- Initial plugin version
