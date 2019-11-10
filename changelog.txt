@@ -1,4 +1,8 @@
 == Changelog ==
+## [1.0.2] - 2019-11-10
+- Changed: Do not generate .htaccess file in temp directory.
+- Changed: Do not remove exported order file from temp directory.
+
 ## [1.0.1] - 2019-11-10
 - Added: Changelog.
 - Tweaked: Localization support
