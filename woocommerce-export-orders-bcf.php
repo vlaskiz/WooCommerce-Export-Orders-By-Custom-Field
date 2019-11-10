@@ -194,7 +194,7 @@ class Woo_Export_Orders_Bcf {
                     </div>
                     <?php endif; ?>
 
-                    <div class="order-items">
+                    <div class="order-items" style="line-height:1.6">
                         <?php
                         foreach( $order_items as $item_id => $item ) {
                             //Get the product ID
@@ -218,7 +218,11 @@ class Woo_Export_Orders_Bcf {
                             $unit = get_post_meta( $product_id, 'unit', true );
 
                             ?>
-                            <div class="order-item-single">-&nbsp;<?php echo $product_name; echo $unit ? '&nbsp;(vienetas&nbsp;' . $unit . ')': ''; ?>&nbsp;x<?php echo $product_qty; ?>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></div>
+                            <div class="order-item-single">
+                                <span>-&nbsp;<?php echo $product_name; ?></span>
+                                <span><?php echo $unit ? '&nbsp;(vienetas&nbsp;' . $unit . ')': ''; ?>&nbsp;<b>(x<?php echo $product_qty; ?>)</b></span>
+                                <span>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></span>
+                            </div>
                         <?php
                         }
                         ?>
