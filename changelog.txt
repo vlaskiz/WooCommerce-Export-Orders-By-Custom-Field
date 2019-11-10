@@ -1,9 +1,12 @@
 == Changelog ==
+## [1.0.4] - 2019-11-10
+- Tweaked: styling and formatting of order items data.
+
 ## [1.0.3] - 2019-11-10
 - Added: Show Order Total line after order items list.
 
 ## [1.0.2] - 2019-11-10
-- Tweaked: Localization, labels and field notifications
+- Tweaked: Localization, labels and field notifications.
 - Changed: Do not generate .htaccess file in temp directory.
 - Changed: Do not remove exported order file from temp directory.
 
