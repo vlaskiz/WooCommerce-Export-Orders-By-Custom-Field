@@ -7,10 +7,10 @@
  * Version:             1.0.1
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
- * Requires at least: 4.4
- * Tested up to: 5.2
+ * Requires at least:   4.4
+ * Tested up to:        5.2
  * WC requires at least: 3.0
- * WC tested up to: 3.8
+ * WC tested up to:     3.8
  * License:             GNU General Public License v3.0
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.html
  * Domain Path:         /i18n/languages/
@@ -254,7 +254,7 @@ class Woo_Export_Orders_Bcf {
                 }
 
                 // Remove created file
-                $this->remove_file( $file_path  );
+                // $this->remove_file( $file_path  );
             }
             
             $this->ajax_submit( 'success', __('Success.', 'woo-export-order-bcf'), $dataArray );
@@ -318,11 +318,11 @@ class Woo_Export_Orders_Bcf {
                 'file'    => '/index.html',
                 'content' => '',
             ),
-            array(
+            /*array(
                 'base'    => $this->upload_dir,
                 'file'    => '/.htaccess',
                 'content' => 'deny from all',
-            ),
+            ),*/
             $file
         );
 
