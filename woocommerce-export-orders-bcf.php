@@ -4,7 +4,7 @@
  * Plugin Name:         WooCommerce Export Orders By Custom Field
  * Plugin URI:          https://avlasovas.me/
  * Description:         Export WooCommerce orders by custom fields to a PDF file.
- * Version:             1.0.4
+ * Version:             1.0.5
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
  * Requires at least:   4.4
@@ -154,7 +154,11 @@ class Woo_Export_Orders_Bcf {
                 'orientation' => 'P',
             ] );
 
+            $mpdf->setFooter('{PAGENO}');
+
             $file_name = 'exported-order-' . $date . '.pdf';
+
+            $all_items = array();
 
             ob_start();
 
@@ -217,10 +221,20 @@ class Woo_Export_Orders_Bcf {
 
                             $unit = get_post_meta( $product_id, 'unit', true );
 
+                            if ( !isset($all_items[$product_id]) ) {
+                                // $all_items[] = $product_id;
+                            }
+
+                            $all_items[$product_id] = [
+                                'name'  => $product_name,
+                                'qty'   => ( isset( $all_items[$product_id]['qty'] ) && $all_items[$product_id]['qty'] !== '') ? $all_items[$product_id]['qty'] + $product_qty : $product_qty,
+                            ];
+                            // $all_items[$product_id][$product_name] += $product_qty;
+
                             ?>
                             <div class="order-item-single">
                                 <span>-&nbsp;<?php echo $product_name; ?></span>
-                                <span><?php echo $unit ? '&nbsp;(vienetas&nbsp;' . $unit . ')': ''; ?>&nbsp;<b>(x<?php echo $product_qty; ?>)</b></span>
+                                <span><?php echo $unit ? '&nbsp;('. __('unit', 'woo-export-order-bcf') .'&nbsp;' . $unit . ')': ''; ?>&nbsp;<b>(x<?php echo $product_qty; ?>)</b></span>
                                 <span>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></span>
                             </div>
                         <?php
@@ -229,7 +243,7 @@ class Woo_Export_Orders_Bcf {
                     </div>
 
                     <div class="order-totals" style="margin-top:6pt;text-align:right">
-                        <?php printf( __('<b>Order total:</b> %s'), $order->get_formatted_order_total() ); ?>
+                        <?php printf( __('<b>Order total:</b> %s', 'woo-export-order-bcf'), $order->get_formatted_order_total() ); ?>
                     </div>
 
                 </div>
@@ -239,6 +253,42 @@ class Woo_Export_Orders_Bcf {
 
             $file_html = ob_get_clean();
             $mpdf->WriteHTML($file_html);
+
+            if ( $all_items ) : 
+
+                error_log(print_r($all_items,1));
+
+                ob_start();
+            ?>
+            <div class="order-items" style="line-height:1.6">
+                <?php
+                foreach( $all_items as $item_name => $item ) {
+
+                    ?>
+                    <div class="order-item-single">
+                        <span><?php echo $item['name']; ?>&nbsp;-&nbsp;</span>
+                        <span><b>(x<?php echo $item['qty'] ?>)</b></span>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+            <?php
+
+                $items_html = ob_get_clean();
+
+                // pagebreak
+                $mpdf->AddPage();
+
+                $mpdf->WriteHTML('<h2>'. __('Products list for the day:', 'woo-export-order-bcf') .'</h2>');
+
+                $mpdf->WriteHTML($items_html);
+
+            endif;
+
+
+
+            // assign PDF content to variable
             $content = $mpdf->Output('', 'S');
 
             $file = array(

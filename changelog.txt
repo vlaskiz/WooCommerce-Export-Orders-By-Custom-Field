@@ -1,4 +1,8 @@
 == Changelog ==
+## [1.0.5] - 2019-11-10
+- Added: Page numbers.
+- Added: Separate page with combined items and their quantities list.
+
 ## [1.0.4] - 2019-11-10
 - Tweaked: styling and formatting of order items data.
 
