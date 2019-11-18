@@ -163,7 +163,7 @@ class Woo_Export_Orders_Bcf {
                 'orientation' => 'P',
             ] );
 
-            $mpdf->setFooter('{PAGENO}');
+            $mpdf->setFooter('{PAGENO} / {nb}');
 
             $file_name = 'exported-order-' . $date . '.pdf';
 

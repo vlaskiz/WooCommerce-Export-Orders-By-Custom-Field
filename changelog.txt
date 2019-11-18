@@ -2,6 +2,7 @@
 ## [1.0.6] - 2019-11-10
 - Added: npm and grunt to generate pot file for translations.
 - Tweaked: Localization adjustments on some strings.
+- Tweaked: Show total page numbers in footer.
 
 ## [1.0.5] - 2019-11-10
 - Added: Page numbers.
