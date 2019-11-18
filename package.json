@@ -1,0 +1,26 @@
+{
+  "name": "woocommerce-export-orders-bcf",
+  "version": "1.0.6",
+  "description": "Export WooCommerce orders by custom fields to a PDF file",
+  "main": "woocommerce-export-orders-bcf.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlaskiz/WooCommerce-Export-Orders-By-Custom-Field.git"
+  },
+  "keywords": [
+    "woocommerce",
+    "wordpress"
+  ],
+  "author": "Andrius Vlasovas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlaskiz/WooCommerce-Export-Orders-By-Custom-Field/issues"
+  },
+  "homepage": "https://github.com/vlaskiz/WooCommerce-Export-Orders-By-Custom-Field#readme",
+  "devDependencies": {
+    "grunt-wp-i18n": "^1.0.3"
+  }
+}

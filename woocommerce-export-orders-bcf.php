@@ -4,7 +4,7 @@
  * Plugin Name:         WooCommerce Export Orders By Custom Field
  * Plugin URI:          https://avlasovas.me/
  * Description:         Export WooCommerce orders by custom fields to a PDF file.
- * Version:             1.0.5
+ * Version:             1.0.6
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
  * Requires at least:   4.4
@@ -13,7 +13,7 @@
  * WC tested up to:     3.8
  * License:             GNU General Public License v3.0
  * License URI:         http://www.gnu.org/licenses/gpl-3.0.html
- * Domain Path:         /i18n/languages/
+ * Domain Path:         /languages/
  * GitHub Plugin URI:   https://github.com/vlaskiz/WooCommerce-Export-Orders-By-Custom-Field
  * text domain:         woo-export-order-bcf
  */
@@ -45,6 +45,15 @@ class Woo_Export_Orders_Bcf {
 
         add_action( 'wp_ajax_woo_export_orders_bcfpdf', [ $this, 'prepare_export_file' ] );
 
+        add_action( 'init', [ $this, 'wpdocs_load_textdomain' ] );
+
+    }
+  
+    /**
+     * Load plugin textdomain.
+     */
+    public function wpdocs_load_textdomain() {
+        load_plugin_textdomain( 'woo-export-order-bcf', false, basename(dirname(__FILE__)) . '/languages' ); 
     }
 
     /*
@@ -186,7 +195,7 @@ class Woo_Export_Orders_Bcf {
 
                         <span class="delivery-time order-detail-single"><b><u><?php echo $order->get_meta('_billing_time'); ?></u></b></span>&nbsp;&nbsp;&nbsp;&nbsp;
 
-                        <span class="customer-name order-detail-single"><?php echo __('<b></b>Klientas: </b>') . $order->get_billing_first_name() . '&nbsp;' . $order->get_billing_last_name(); ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="customer-name order-detail-single"><b><?php echo __('Client:', 'woo-export-order-bcf'); ?></b>&nbsp;<?php echo $order->get_billing_first_name() . '&nbsp;' . $order->get_billing_last_name(); ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <span class="customer-phone"><b><?php echo $order->get_billing_phone(); ?></b></span>
 
@@ -194,7 +203,7 @@ class Woo_Export_Orders_Bcf {
 
                     <?php if ( $customer_note ) : ?>
                     <div class="order-note" style="margin-bottom:5pt">
-                        <span><b><?php _e('Pastaba:'); ?>&nbsp;</b></span><?php echo $customer_note; ?>
+                        <span><b><?php _e('Customer note:', 'woo-export-order-bcf'); ?>&nbsp;</b></span><?php echo $customer_note; ?>
                     </div>
                     <?php endif; ?>
 
@@ -243,7 +252,7 @@ class Woo_Export_Orders_Bcf {
                     </div>
 
                     <div class="order-totals" style="margin-top:6pt;text-align:right">
-                        <?php printf( __('<b>Order total:</b> %s', 'woo-export-order-bcf'), $order->get_formatted_order_total() ); ?>
+                        <?php printf( __('%sOrder total:%s %s', 'woo-export-order-bcf'), '<b>', '</b>', $order->get_formatted_order_total() ); ?>
                     </div>
 
                 </div>

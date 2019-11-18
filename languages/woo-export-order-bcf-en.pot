@@ -1,0 +1,173 @@
+# Copyright (C) 2019 Andrius Vlasovas
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Export Orders By Custom Field 1.0.5\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/woocommerce-export-orders-bcf\n"
+"POT-Creation-Date: 2019-11-18 20:39:46+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: inc/admin-dashboard.php:19 inc/admin-dashboard.php:20
+msgid "Order Exports"
+msgstr ""
+
+#: inc/admin-dashboard.php:35
+msgid "Pending"
+msgstr ""
+
+#: inc/admin-dashboard.php:36
+msgid "Processing"
+msgstr ""
+
+#: inc/admin-dashboard.php:37
+msgid "On-hold"
+msgstr ""
+
+#: inc/admin-dashboard.php:38
+msgid "Completed"
+msgstr ""
+
+#: inc/admin-dashboard.php:39
+msgid "Canceled"
+msgstr ""
+
+#: inc/admin-dashboard.php:40
+msgid "Refunded"
+msgstr ""
+
+#: inc/admin-dashboard.php:41
+msgid "Failed"
+msgstr ""
+
+#: inc/admin-dashboard.php:58
+msgid "WooCommerce Order Exports"
+msgstr ""
+
+#: inc/admin-dashboard.php:63
+msgid "Settings have been saved."
+msgstr ""
+
+#: inc/admin-dashboard.php:69
+msgid "Export Orders"
+msgstr ""
+
+#: inc/admin-dashboard.php:70
+msgid "Settings"
+msgstr ""
+
+#: inc/admin-dashboard.php:79
+msgid "Order status:"
+msgstr ""
+
+#: inc/admin-dashboard.php:82 inc/admin-dashboard.php:83
+msgid "Select Order Status"
+msgstr ""
+
+#: inc/admin-dashboard.php:90
+msgid "If left empty, completed orders will be exported."
+msgstr ""
+
+#: inc/admin-dashboard.php:96
+msgid "Delivery date:"
+msgstr ""
+
+#: inc/admin-dashboard.php:99
+msgid "Select date"
+msgstr ""
+
+#: inc/admin-dashboard.php:105
+msgid "Send to emails:"
+msgstr ""
+
+#: inc/admin-dashboard.php:108
+msgid "Enter email address(-es)"
+msgstr ""
+
+#: inc/admin-dashboard.php:109
+msgid "Single or comma separated list of emails."
+msgstr ""
+
+#: inc/admin-dashboard.php:112
+msgid ""
+"Admin (From) email is not set. Please set it in the %1$ssettings tab%2$s "
+"tab if you want to use this feature."
+msgstr ""
+
+#: inc/admin-dashboard.php:124
+msgid "Export"
+msgstr ""
+
+#: inc/admin-dashboard.php:137
+msgid "Admin email (From email):"
+msgstr ""
+
+#: inc/admin-dashboard.php:140
+msgid "Enter email address"
+msgstr ""
+
+#: inc/admin-dashboard.php:146
+msgid "Save"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:129
+msgid "Sorry, this action cannot be performed for security reasons."
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:134
+msgid "Select delivery date."
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:198
+msgid "Client:"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:206
+msgid "Customer note:"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:246
+msgid "unit"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:255
+msgid "%sOrder total:%s %s"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:292
+msgid "Products list for the day:"
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:325
+msgid "Success."
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:327
+msgid "No orders found. Try different parameters."
+msgstr ""
+
+#: woocommerce-export-orders-bcf.php:449
+msgid "Bellow please find an attached order export file."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce Export Orders By Custom Field"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://avlasovas.me/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Export WooCommerce orders by custom fields to a PDF file."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Andrius Vlasovas"
+msgstr ""
