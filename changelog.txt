@@ -1,4 +1,7 @@
 == Changelog ==
+## [1.0.8] - 2019-11-20
+- Tweaked: Styling and output.
+
 ## [1.0.7] - 2019-11-20
 - Added: Display order item selected variations' values in orders list.
 - Added: Display order item selected variations' values in combined items list.

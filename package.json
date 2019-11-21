@@ -1,6 +1,6 @@
 {
   "name": "woocommerce-export-orders-bcf",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Export WooCommerce orders by custom fields to a PDF file",
   "main": "woocommerce-export-orders-bcf.php",
   "scripts": {

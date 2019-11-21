@@ -4,7 +4,7 @@
  * Plugin Name:         WooCommerce Export Orders By Custom Field
  * Plugin URI:          https://avlasovas.me/
  * Description:         Export WooCommerce orders by custom fields to a PDF file.
- * Version:             1.0.7
+ * Version:             1.0.8
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
  * Requires at least:   4.4
@@ -207,7 +207,7 @@ class Woo_Export_Orders_Bcf {
                     </div>
                     <?php endif; ?>
 
-                    <div class="order-items" style="line-height:1.7">
+                    <div class="order-items" style="line-height:1.6">
                         <?php
                         foreach( $order_items as $item_id => $item ) {
 
@@ -238,7 +238,7 @@ class Woo_Export_Orders_Bcf {
                             ];
 
                             ?>
-                            <div class="order-item-single">
+                            <div class="order-item-single" style="margin-top:4pt">
                                 <span>-&nbsp;<?php echo $product_name; ?></span>
                                 <span><?php echo $unit ? '&nbsp;('. __('unit', 'woo-export-order-bcf') .'&nbsp;' . $unit . ')': ''; ?><b>&nbsp;(x<?php echo $product_qty; ?>)</b></span>
                                 <span>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></span>
@@ -246,25 +246,30 @@ class Woo_Export_Orders_Bcf {
                                 if ( $item_meta_data ) {
                                     foreach( $item_meta_data as $meta_data ) {
                                         $meta_data_as_array = $meta_data->get_data();
-                                        unset($meta_data_as_array['id']);
 
-                                        $attribute_name = get_taxonomy( $meta_data_as_array['key'] )->labels->singular_name;
-                                        $attribute_value = get_term_by( 'slug', $meta_data_as_array['value'], $meta_data_as_array['key'] )->name;
+                                        if ( $meta_data_as_array ) {
+                                            unset($meta_data_as_array['id']);
 
-                                        $temp_item_data = [
-                                            'key'   => $meta_data_as_array['key'],
-                                            'value' => $meta_data_as_array['value'],
-                                            'formatted_name'  => $attribute_name,
-                                            'formatted_value' => $attribute_value,
-                                        ];
-
-                                        $temp_item['variations'][] = $temp_item_data;
-
-                                        ?>
-                                        <div class="order-item-single__variation" style="padding-left:12pt;font-size:10pt;line-height:1.3;">
-                                            <span><b><?php echo $attribute_name; ?></b>:&nbsp;<?php echo $attribute_value; ?></span>
-                                        </div>
-                                        <?php
+                                            $attribute_name = get_taxonomy( $meta_data_as_array['key'] )->labels->singular_name;
+                                            $attribute_value = get_term_by( 'slug', $meta_data_as_array['value'], $meta_data_as_array['key'] )->name;
+    
+                                            if ( $attribute_name && $attribute_value ) {
+                                                $temp_item_data = [
+                                                    'key'   => $meta_data_as_array['key'],
+                                                    'value' => $meta_data_as_array['value'],
+                                                    'formatted_name'  => $attribute_name,
+                                                    'formatted_value' => $attribute_value,
+                                                ];
+        
+                                                $temp_item['variations'][] = $temp_item_data;
+        
+                                                ?>
+                                                <div class="order-item-single__variation" style="padding-left:12pt;font-size:10pt;line-height:1.3;">
+                                                    <span><b><?php echo $attribute_name; ?></b>:&nbsp;<?php echo $attribute_value; ?></span>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
                                     }
                                 }
                                 ?>
@@ -314,9 +319,9 @@ class Woo_Export_Orders_Bcf {
                 foreach( $all_items['products'] as $key => $item ) {
 
                     ?>
-                    <div class="order-item-single">
+                    <div class="order-item-single" style="margin-bottom:8pt">
                         <span><?php echo $item['name']; ?>&nbsp;-&nbsp;</span>
-                        <span><b>(x<?php echo $all_items['quantities'][$key] ?>)</b></span>
+                        <span><b>x<?php echo $all_items['quantities'][$key] ?></b></span>
                         <?php
                         if ( isset( $item['variations'] ) ) {
                             foreach( $item['variations'] as $variation ) { ?>
