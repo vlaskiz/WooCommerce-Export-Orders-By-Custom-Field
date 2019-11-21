@@ -4,7 +4,7 @@
  * Plugin Name:         WooCommerce Export Orders By Custom Field
  * Plugin URI:          https://avlasovas.me/
  * Description:         Export WooCommerce orders by custom fields to a PDF file.
- * Version:             1.0.8
+ * Version:             1.0.9
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
  * Requires at least:   4.4
@@ -367,6 +367,7 @@ class Woo_Export_Orders_Bcf {
                 $file_path = $this->upload_dir . '/' . $file_name;
 
                 $dataArray['download_url'] = $file_url;
+                $dataArray['file_name'] = $file_name;
 
                 // Email the report
                 if ( isset( $posted_data['woebcf_email_address'] ) && $posted_data['woebcf_email_address'] ) {

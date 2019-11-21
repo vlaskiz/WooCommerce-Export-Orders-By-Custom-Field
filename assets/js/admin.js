@@ -1,6 +1,33 @@
 
 jQuery( document ).ready(function() {
 
+    function SaveToDisk(fileURL, fileName) {
+        // for non-IE
+        if (!window.ActiveXObject) {
+            var save = document.createElement('a');
+            save.href = fileURL;
+            save.target = '_blank';
+            save.download = fileName || 'unknown';
+    
+            var evt = new MouseEvent('click', {
+                'view': window,
+                'bubbles': true,
+                'cancelable': false
+            });
+            save.dispatchEvent(evt);
+    
+            (window.URL || window.webkitURL).revokeObjectURL(save.href);
+        }
+    
+        // for IE < 11
+        else if ( !! window.ActiveXObject && document.execCommand)     {
+            var _window = window.open(fileURL, '_blank');
+            _window.document.close();
+            _window.document.execCommand('SaveAs', true, fileName || fileURL)
+            _window.close();
+        }
+    }
+
     (function ($) {
         "use strict";
 
@@ -40,10 +67,8 @@ jQuery( document ).ready(function() {
                 success: function (data) {
                     response = data;
                     if ( response.status === 'success' ) {
-                        window.open(
-                            response.data.download_url,
-                            '_blank' // <- This is what makes it open in a new window.
-                        );
+                        // window.open( response.data.download_url, '_blank' // );
+                        SaveToDisk(response.data.download_url, response.data.file_name);
                     }
 
                     $exportForm.append('<div class="export-message" style="margin-top:10px">'+ response.message +'</div>');
