@@ -1,4 +1,8 @@
 == Changelog ==
+## [1.0.7] - 2019-11-20
+- Added: Display order item selected variations' values in orders list.
+- Added: Display order item selected variations' values in combined items list.
+
 ## [1.0.6] - 2019-11-10
 - Added: npm and grunt to generate pot file for translations.
 - Tweaked: Localization adjustments on some strings.

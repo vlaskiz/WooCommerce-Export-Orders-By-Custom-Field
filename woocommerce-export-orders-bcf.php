@@ -4,7 +4,7 @@
  * Plugin Name:         WooCommerce Export Orders By Custom Field
  * Plugin URI:          https://avlasovas.me/
  * Description:         Export WooCommerce orders by custom fields to a PDF file.
- * Version:             1.0.6
+ * Version:             1.0.7
  * Author:              Andrius Vlasovas
  * Author URI:          https://avlasovas.me/
  * Requires at least:   4.4
@@ -207,47 +207,89 @@ class Woo_Export_Orders_Bcf {
                     </div>
                     <?php endif; ?>
 
-                    <div class="order-items" style="line-height:1.6">
+                    <div class="order-items" style="line-height:1.7">
                         <?php
                         foreach( $order_items as $item_id => $item ) {
-                            //Get the product ID
-                            $product_id = $item->get_product_id();
 
                             //Get the variation ID
-                            // $product_id = $item->get_variation_id();
+                            $product_id = $item->get_variation_id();
+                            $variation_id = $item->get_variation_id();
+
+                            if ( !$product_id ) {
+                                //Get the product ID
+                                $product_id = $item->get_product_id();
+                            }
+
+                            $item_meta_data = $item->get_meta_data();
 
                             //Get the WC_Product object
-                            // $product = $item->get_product();
+                            $product = $item->get_product();
 
                             // The quantity
                             $product_qty = $item->get_quantity();
 
                             // The product name
-                            $product_name = $item->get_name(); // … OR: $product->get_name();
-
-                            //Get the product SKU (using WC_Product method)
-                            // $sku = $product->get_sku();
+                            $product_name = $item->get_name();
 
                             $unit = get_post_meta( $product_id, 'unit', true );
 
-                            if ( !isset($all_items[$product_id]) ) {
-                                // $all_items[] = $product_id;
-                            }
-
-                            $all_items[$product_id] = [
+                            $temp_item = [
                                 'name'  => $product_name,
-                                'qty'   => ( isset( $all_items[$product_id]['qty'] ) && $all_items[$product_id]['qty'] !== '') ? $all_items[$product_id]['qty'] + $product_qty : $product_qty,
                             ];
-                            // $all_items[$product_id][$product_name] += $product_qty;
 
                             ?>
                             <div class="order-item-single">
                                 <span>-&nbsp;<?php echo $product_name; ?></span>
-                                <span><?php echo $unit ? '&nbsp;('. __('unit', 'woo-export-order-bcf') .'&nbsp;' . $unit . ')': ''; ?>&nbsp;<b>(x<?php echo $product_qty; ?>)</b></span>
+                                <span><?php echo $unit ? '&nbsp;('. __('unit', 'woo-export-order-bcf') .'&nbsp;' . $unit . ')': ''; ?><b>&nbsp;(x<?php echo $product_qty; ?>)</b></span>
                                 <span>&nbsp;-&nbsp;<b><?php echo wc_price($item->get_total()); ?></b></span>
+                                <?php
+                                if ( $item_meta_data ) {
+                                    foreach( $item_meta_data as $meta_data ) {
+                                        $meta_data_as_array = $meta_data->get_data();
+                                        unset($meta_data_as_array['id']);
+
+                                        $attribute_name = get_taxonomy( $meta_data_as_array['key'] )->labels->singular_name;
+                                        $attribute_value = get_term_by( 'slug', $meta_data_as_array['value'], $meta_data_as_array['key'] )->name;
+
+                                        $temp_item_data = [
+                                            'key'   => $meta_data_as_array['key'],
+                                            'value' => $meta_data_as_array['value'],
+                                            'formatted_name'  => $attribute_name,
+                                            'formatted_value' => $attribute_value,
+                                        ];
+
+                                        $temp_item['variations'][] = $temp_item_data;
+
+                                        ?>
+                                        <div class="order-item-single__variation" style="padding-left:12pt;font-size:10pt;line-height:1.3;">
+                                            <span><b><?php echo $attribute_name; ?></b>:&nbsp;<?php echo $attribute_value; ?></span>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
-                        <?php
-                        }
+                            <?php
+
+                            $temp_items['products'][] = $temp_item;
+
+                            if ( isset( $all_items['products'] ) ) {
+                                foreach ( $all_items['products'] as $key => $products_array ) {
+                                    if ( $products_array == $temp_item ) {
+                                        $all_items['quantities'][$key] = $all_items['quantities'][$key] + $product_qty;
+                                    } else {
+                                        if ( !in_array($temp_item, $all_items['products']) ) {
+                                            $all_items['products'][] = $temp_item;
+                                            $all_items['quantities'][] = $product_qty;
+                                        }
+                                    }
+                                }
+                            } else {
+                                $all_items['products'][] = $temp_item;
+                                $all_items['quantities'][] = $product_qty;
+                            }
+
+                        } //endforeach
                         ?>
                     </div>
 
@@ -265,18 +307,26 @@ class Woo_Export_Orders_Bcf {
 
             if ( $all_items ) : 
 
-                error_log(print_r($all_items,1));
-
                 ob_start();
             ?>
             <div class="order-items" style="line-height:1.6">
                 <?php
-                foreach( $all_items as $item_name => $item ) {
+                foreach( $all_items['products'] as $key => $item ) {
 
                     ?>
                     <div class="order-item-single">
                         <span><?php echo $item['name']; ?>&nbsp;-&nbsp;</span>
-                        <span><b>(x<?php echo $item['qty'] ?>)</b></span>
+                        <span><b>(x<?php echo $all_items['quantities'][$key] ?>)</b></span>
+                        <?php
+                        if ( isset( $item['variations'] ) ) {
+                            foreach( $item['variations'] as $variation ) { ?>
+                            <div class="order-item-single__variation" style="padding-left:12pt;font-size:10pt;line-height:1.3;">
+                                <span><b><?php echo $variation['formatted_name']; ?></b>:&nbsp;<?php echo $variation['formatted_value']; ?></span>
+                            </div>
+                            <?php
+                            }
+                        }
+                        ?>
                     </div>
                 <?php
                 }
